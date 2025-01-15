@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}World map{% endblock %}
+
+{% block body %}
+    <div id="map"></div>
+    <script>
+        document.addEventListener("DOMContentLoaded", (event) => {
+            var map = new maplibregl.Map({
+                container: 'map', // container id
+                // style: './styles/orpi.json', // style URL
+                //style: './styles/osm-bright.style.json', // style URL
+                style: '{{ path('style', { style: style }) }}', // style URL
+                center: [-.57, 44.84], // starting position [lng, lat]
+                zoom: 15, // starting zoom
+                minZoom: 1,
+                maxZoom: 19
+            });
+        });
+    </script>
+{% endblock %}
