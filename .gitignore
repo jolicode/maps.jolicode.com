@@ -5,5 +5,4 @@
 # Tools
 .php-cs-fixer.cache
 
-/data
-!/data/tilemaker
+/maps/data

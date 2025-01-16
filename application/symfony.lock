@@ -1,31 +1,4 @@
 {
-    "doctrine/doctrine-bundle": {
-        "version": "2.13",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "2.13",
-            "ref": "8d96c0b51591ffc26794d865ba3ee7d193438a83"
-        },
-        "files": [
-            "config/packages/doctrine.yaml",
-            "src/Entity/.gitignore",
-            "src/Repository/.gitignore"
-        ]
-    },
-    "doctrine/doctrine-migrations-bundle": {
-        "version": "3.3",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "3.1",
-            "ref": "1d01ec03c6ecbd67c3375c5478c9a423ae5d6a33"
-        },
-        "files": [
-            "config/packages/doctrine_migrations.yaml",
-            "migrations/.gitignore"
-        ]
-    },
     "phpunit/phpunit": {
         "version": "9.6",
         "recipe": {
@@ -110,18 +83,6 @@
             "src/Kernel.php"
         ]
     },
-    "symfony/mailer": {
-        "version": "7.1",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "4.3",
-            "ref": "09051cfde49476e3c12cd3a0e44289ace1c75a4f"
-        },
-        "files": [
-            "config/packages/mailer.yaml"
-        ]
-    },
     "symfony/maker-bundle": {
         "version": "1.61",
         "recipe": {
@@ -130,18 +91,6 @@
             "version": "1.0",
             "ref": "fadbfe33303a76e25cb63401050439aa9b1a9c7f"
         }
-    },
-    "symfony/messenger": {
-        "version": "7.1",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "6.0",
-            "ref": "ba1ac4e919baba5644d31b57a3284d6ba12d52ee"
-        },
-        "files": [
-            "config/packages/messenger.yaml"
-        ]
     },
     "symfony/monolog-bundle": {
         "version": "3.10",
@@ -248,15 +197,6 @@
             "templates/base.html.twig"
         ]
     },
-    "symfony/ux-turbo": {
-        "version": "2.21",
-        "recipe": {
-            "repo": "github.com/symfony/recipes",
-            "branch": "main",
-            "version": "2.19",
-            "ref": "9dd2778a116b6e5e01e5e1582d03d5a9e82630de"
-        }
-    },
     "symfony/validator": {
         "version": "7.1",
         "recipe": {
@@ -281,6 +221,9 @@
             "config/packages/web_profiler.yaml",
             "config/routes/web_profiler.yaml"
         ]
+    },
+    "symfonycasts/tailwind-bundle": {
+        "version": "v0.6.1"
     },
     "twig/extra-bundle": {
         "version": "v3.15.0"

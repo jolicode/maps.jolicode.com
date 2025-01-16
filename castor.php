@@ -35,7 +35,7 @@ function create_default_variables(): array
             "www.{$projectName}.{$tld}",
         ],
         'php_version' => $_SERVER['DS_PHP_VERSION'] ?? '8.3',
-        'maps_data_folder' => __DIR__ . '/data',
+        'maps_data_folder' => __DIR__ . '/maps',
     ];
 }
 

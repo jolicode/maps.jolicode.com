@@ -38,16 +38,16 @@ function download(string $source, string $targetFilename): void
 function create_directories(): void
 {
     $directories = [
-        'bin',
-        'bin/pmtiles',
-        'tiles',
-        'tiles/mbtiles',
-        'tiles/pbf',
-        'tiles/pmtiles',
-        'resources',
-        'resources/shapefiles',
-        'resources/styles/versatiles-style',
-        'tmp/store',
+        'data/bin',
+        'data/bin/pmtiles',
+        'data/tiles',
+        'data/tiles/mbtiles',
+        'data/tiles/pbf',
+        'data/tiles/pmtiles',
+        'data/resources',
+        'data/resources/shapefiles',
+        'data/resources/styles/versatiles-style',
+        'data/tmp/store',
     ];
 
     foreach ($directories as $directory) {
@@ -57,18 +57,19 @@ function create_directories(): void
     }
 }
 
-function get_filepath(string $name, string $type): string
+function get_tile_filepath(string $schema, string $name, string $type, bool $relative = false): string
 {
-    switch ($type) {
-        case 'pbf':
-            return sprintf('%s/tiles/pbf/%s.osm.pbf', variable('maps_data_folder'), $name);
-        case 'mbtiles':
-            return sprintf('%s/tiles/mbtiles/%s.mbtiles', variable('maps_data_folder'), $name);
-        case 'pmtiles':
-            return sprintf('%s/tiles/pmtiles/%s.pmtiles', variable('maps_data_folder'), $name);
-        default:
-            throw new \InvalidArgumentException(sprintf('Unknown type %s', $type));
+    $path = match ($type) {
+        'mbtiles' => sprintf('data/tiles/mbtiles/%s/%s.mbtiles', $schema, $name),
+        'pmtiles' => sprintf('data/tiles/pmtiles/%s/%s.pmtiles', $schema, $name),
+        default => throw new \InvalidArgumentException(sprintf('Unknown type %s', $type)),
+    };
+
+    if (!$relative) {
+        return sprintf('%s/%s', variable('maps_data_folder'), $path);
     }
+
+    return $path;
 }
 
 /**
@@ -76,20 +77,40 @@ function get_filepath(string $name, string $type): string
  */
 function get_mbtiles_filenames(): array
 {
-    $mbtilesFolder = sprintf('%s/tiles/mbtiles', variable('maps_data_folder'));
-
-    if (!fs()->exists($mbtilesFolder)) {
-        return [];
-    }
-
+    $tileFiles = get_tile_files_list('mbtiles');
     $mbtiles = [];
-    $files = glob(sprintf('%s/*.mbtiles', $mbtilesFolder));
 
-    foreach ($files as $file) {
-        $mbtiles[] = basename($file, '.mbtiles');
+    foreach ($tileFiles as $file) {
+        $mbtiles[] = basename(dirname($file)) . '/' . basename($file, '.mbtiles');
     }
 
     return $mbtiles;
+}
+
+/**
+ * @return string[]
+ */
+function get_pbf_filenames(): array
+{
+    $tileFiles = get_tile_files_list('pbf');
+    $mbtiles = [];
+
+    foreach ($tileFiles as $file) {
+        $mbtiles[] = basename($file, '.osm.pbf');
+    }
+
+    return $mbtiles;
+}
+
+function get_tile_files_list(string $type): array
+{
+    $tilesFolder = sprintf('%s/data/tiles/%s', variable('maps_data_folder'), $type);
+
+    if (!fs()->exists($tilesFolder)) {
+        return [];
+    }
+
+    return glob(sprintf('%s/{,*/}*.%s', $tilesFolder, $type), \GLOB_BRACE);
 }
 
 function unarchive(string $filename, string $target): void

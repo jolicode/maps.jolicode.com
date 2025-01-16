@@ -16,20 +16,26 @@ return [
         'path' => './assets/app.js',
         'entrypoint' => true,
     ],
-    '@hotwired/stimulus' => [
-        'version' => '3.2.2',
-    ],
     '@symfony/stimulus-bundle' => [
         'path' => './vendor/symfony/stimulus-bundle/assets/dist/loader.js',
     ],
+    '@hotwired/stimulus' => [
+        'version' => '3.2.2',
+    ],
     '@hotwired/turbo' => [
-        'version' => '7.3.0',
+        'version' => '8.0.12',
     ],
     'maplibre-gl' => [
-        'version' => '4.7.1',
+        'version' => '5.0.1',
     ],
     'maplibre-gl/dist/maplibre-gl.min.css' => [
-        'version' => '4.7.1',
+        'version' => '5.0.1',
         'type' => 'css',
+    ],
+    'pmtiles' => [
+        'version' => '4.2.1',
+    ],
+    'fflate' => [
+        'version' => '0.8.2',
     ],
 ];

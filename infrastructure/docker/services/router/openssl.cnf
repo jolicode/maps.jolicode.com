@@ -16,7 +16,4 @@ subjectAltName = @alt_names
 CN=cartos.test
 
 [alt_names]
-DNS.1 = maputnik.cartos.test
-DNS.2 = martin.cartos.test
-DNS.3 = tileservergl.cartos.test
 DNS.4 = www.cartos.test

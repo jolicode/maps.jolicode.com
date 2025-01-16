@@ -10,7 +10,6 @@ services:
         ports:
             - "80:80"
             - "443:443"
-            - "8080:8080"
         networks:
             - default
         profiles:
@@ -32,51 +31,3 @@ services:
             - "traefik.http.routers.${PROJECT_NAME}-frontend-unsecure.rule=Host(${PROJECT_DOMAINS})"
             # Comment the next line to be able to access frontend via HTTP instead of HTTPS
             - "traefik.http.routers.${PROJECT_NAME}-frontend-unsecure.middlewares=redirect-to-https@file"
-
-    maputnik:
-        image: ghcr.io/maplibre/maputnik:main
-        restart: on-failure
-        ports:
-            - 8888:80
-        profiles:
-            - default
-        labels:
-            - "traefik.enable=true"
-            - "project-name=${PROJECT_NAME}"
-            - "traefik.http.routers.${PROJECT_NAME}-maputnik.rule=Host(`maputnik.${PROJECT_ROOT_DOMAIN}`)"
-            - "traefik.http.routers.${PROJECT_NAME}-maputnik.tls=true"
-
-    martin:
-        image: ghcr.io/maplibre/martin
-        restart: on-failure
-        ports:
-            - 3000:3000
-        volumes:
-            - ./services/martin/config.yml:/config.yml
-            - ./services/martin/data/fonts:/fonts
-            - ./services/martin/data/sprites:/sprites
-            - ../../data/pmtiles:/tiles
-        command: ["--config", "/config.yml"]
-        profiles:
-            - default
-        labels:
-            - "traefik.enable=true"
-            - "project-name=${PROJECT_NAME}"
-            - "traefik.http.routers.${PROJECT_NAME}-martin.rule=Host(`martin.${PROJECT_ROOT_DOMAIN}`)"
-            - "traefik.http.routers.${PROJECT_NAME}-martin.tls=true"
-
-    tileservergl:
-        image: maptiler/tileserver-gl
-        ports:
-            - 4000:8080
-        stdin_open: true
-        tty: true
-        volumes:
-            - ../../data/pmtiles:/data
-        profiles:
-            - default
-        labels:
-            - "traefik.enable=true"
-            - "project-name=${PROJECT_NAME}"
-            - "traefik.http.routers.${PROJECT_NAME}-tileservergl.rule=Host(`tileservergl.${PROJECT_ROOT_DOMAIN}`)"
-            - "traefik.http.routers.${PROJECT_NAME}-tileservergl.tls=true"

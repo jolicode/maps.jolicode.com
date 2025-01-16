@@ -1,21 +1,38 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}World map{% endblock %}
+{% block title %}{{ location }} map{% endblock %}
+
+{% block bodyClass %} class="h-screen"{% endblock %}
 
 {% block body %}
-    <div id="map"></div>
-    <script>
-        document.addEventListener("DOMContentLoaded", (event) => {
-            var map = new maplibregl.Map({
-                container: 'map', // container id
-                // style: './styles/orpi.json', // style URL
-                //style: './styles/osm-bright.style.json', // style URL
-                style: '{{ path('style', { style: style }) }}', // style URL
-                center: [-.57, 44.84], // starting position [lng, lat]
-                zoom: 15, // starting zoom
-                minZoom: 1,
-                maxZoom: 19
-            });
-        });
-    </script>
+    <div
+        data-controller="map"
+        data-map-style-url-value="{{ url('map_style', { schema: schema, location: location, style: style }) }}"
+        class="flex h-full"
+    >
+        <div
+            id="sources"
+            data-map-target="sources"
+            class="flex-none w-64 p-2 bg-white"
+        >
+            {% for schema, schemaSources in sources %}
+                <h3 class="pt-4 font-semibold border-b border-indigo-100">{{ schema }}</h3>
+                {% for schemaSource in schemaSources %}
+                    <a class="block underline" href="{{ url('map', { schema: schema, location: schemaSource.filename[:-8], style: schema|defaultStyle }) }}">
+                        {{ schemaSource.filename[:-8] }}
+                    </a>
+                {% endfor %}
+            {% endfor %}
+        </div>
+        <div
+            id="map"
+            data-map-target="map"
+            class="flex-1 grow"
+        ></div>
+        <div
+            id="meta"
+            data-map-target="meta"
+            class="absolute top-0 right-0 bg-white bg-opacity-75 p-2 rounded-l-lg z-10"
+        ></div>
+    </div>
 {% endblock %}

@@ -1,0 +1,53 @@
+{
+	"layers": {
+		"water": {
+			"minzoom": 6,
+			"maxzoom": 14,
+			"simplify_below": 12,
+			"simplify_level": 0.0003,
+			"simplify_ratio": 2
+		},
+		"ocean": {
+			"minzoom": 8,
+			"maxzoom": 14,
+            "source": "maps/resources/shapefiles/water-polygons-split-4326/water_polygons.shp",
+			"filter_below": 12,
+			"filter_area": 0.5,
+			"simplify_below": 13,
+			"simplify_level": 0.0001,
+			"simplify_ratio": 2,
+			"simplify_algorithm": "visvalingam",
+			"write_to": "water"
+		},
+        "ocean-low": {
+            "minzoom": 0,
+            "maxzoom": 7,
+            "source": "maps/resources/shapefiles/simplified-water-polygons-split-4326/simplified_water_polygons.shp",
+            "source_columns": true,
+            "simplify_below": 14,
+            "simplify_level": 0.0001,
+            "simplify_ratio": 2,
+            "write_to": "ocean"
+        }
+	},
+	"settings": {
+		"minzoom": 0,
+		"maxzoom": 14,
+		"basezoom": 14,
+		"include_ids": false,
+		"combine_below": 14,
+		"name": "Land and water",
+		"version": "3.0",
+		"description": "Land and water",
+		"compress": "gzip",
+		"filemetadata": {
+			"tilejson": "2.0.0",
+			"scheme": "xyz",
+			"type": "baselayer",
+			"format": "pbf",
+			"tiles": [
+				"https://maps.jolicode.com/switzerland/{z}/{x}/{y}.pbf"
+			]
+		}
+	}
+}

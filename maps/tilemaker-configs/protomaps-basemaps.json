@@ -1,0 +1,99 @@
+{
+	"layers": {
+		"places": {
+			"minzoom": 0,
+			"maxzoom": 14
+		},
+		"boundaries": {
+			"minzoom": 0,
+			"maxzoom": 14,
+			"simplify_below": 12,
+			"simplify_level": 0.0003,
+			"simplify_ratio": 2,
+			"simplify_algorithm": "visvalingam"
+		},
+		"pois": {
+			"minzoom": 12,
+			"maxzoom": 14
+		},
+		"pois_detail": {
+			"minzoom": 14,
+			"maxzoom": 14,
+			"write_to": "pois"
+		},
+		"roads": {
+			"minzoom": 4,
+			"maxzoom": 14,
+			"simplify_below": 13,
+			"simplify_level": 0.0003
+		},
+		"buildings": {
+			"minzoom": 13,
+			"maxzoom": 14
+		},
+		"waterway": {
+			"minzoom": 8,
+			"maxzoom": 14,
+			"simplify_below": 12,
+			"simplify_level": 0.0003,
+			"simplify_ratio": 2,
+			"write_to": "waterway"
+		},
+		"waterway_detail": {
+			"minzoom": 12,
+			"maxzoom": 14,
+			"write_to": "waterway"
+		},
+		"water": {
+			"minzoom": 6,
+			"maxzoom": 14,
+			"simplify_below": 12,
+			"simplify_level": 0.0003,
+			"simplify_ratio": 2
+		},
+		"water_name": {
+			"minzoom": 14,
+			"maxzoom": 14,
+			"write_to": "waterway"
+		},
+		"water_name_detail": {
+			"minzoom": 14,
+			"maxzoom": 14,
+			"write_to": "water_name"
+		},
+		"landcover": {
+			"minzoom": 0,
+			"maxzoom": 14,
+			"simplify_below": 13,
+			"simplify_level": 0.0003,
+			"simplify_ratio": 2
+		},
+		"landuse": {
+			"minzoom": 4,
+			"maxzoom": 14,
+			"simplify_below": 13,
+			"simplify_level": 0.0003,
+			"simplify_ratio": 2
+		}
+	},
+	"settings": {
+		"minzoom": 0,
+		"maxzoom": 14,
+		"basezoom": 14,
+		"include_ids": false,
+		"combine_below": 14,
+		"name": "Tilemaker to protomaps basemap schema",
+		"version": "3.0",
+		"description": "Tile config based on protomaps basemap schema",
+		"compress": "gzip",
+		"filemetadata": {
+			"tilejson": "2.0.0",
+			"scheme": "xyz",
+			"type": "baselayer",
+			"format": "pbf",
+			"tiles": [
+				"https://maps.jolicode.com/switzerland/{z}/{x}/{y}.pbf"
+			]
+		}
+	}
+}
