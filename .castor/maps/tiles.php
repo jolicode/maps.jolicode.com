@@ -110,7 +110,7 @@ function convert(
     }
 
     $command = [
-        'data/bin/pmtiles/pmtiles',
+        '/usr/local/bin/pmtiles',
         'convert',
         get_tile_filepath($schema, $name, 'mbtiles', true),
         get_tile_filepath($schema, $name, 'pmtiles', true),

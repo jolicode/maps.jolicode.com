@@ -38,15 +38,13 @@ function download(string $source, string $targetFilename): void
 function create_directories(): void
 {
     $directories = [
-        'data/bin',
-        'data/bin/pmtiles',
+        'data/resources',
+        'data/resources/shapefiles',
+        'data/resources/styles/versatiles-style',
         'data/tiles',
         'data/tiles/mbtiles',
         'data/tiles/pbf',
         'data/tiles/pmtiles',
-        'data/resources',
-        'data/resources/shapefiles',
-        'data/resources/styles/versatiles-style',
         'data/tmp/store',
     ];
 
