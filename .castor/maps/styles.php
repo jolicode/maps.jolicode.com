@@ -21,7 +21,7 @@ function download_all(): void
 }
 
 #[AsTask(description: 'Download openmaptiles styles', name: 'openmaptiles', namespace: 'maps:styles:download')]
-function download_openmaptiles(): void
+function download_openmaptiles(bool $force = false): void
 {
     io()->info('Downloading openmaptiles styles');
     create_directories();
@@ -34,7 +34,7 @@ function download_openmaptiles(): void
     foreach ($repositories as $name => $repository) {
         $targetFilename = sprintf('%s/data/resources/styles/%s.zip', variable('maps_data_folder'), $name);
 
-        if (fs()->exists($targetFilename)) {
+        if (!$force && fs()->exists($targetFilename)) {
             io()->warning(sprintf('The file %s already exists, skipping download.', $targetFilename));
 
             continue;
@@ -48,14 +48,14 @@ function download_openmaptiles(): void
 }
 
 #[AsTask(description: 'Download protomaps basemaps styles', name: 'protomaps-basemaps', namespace: 'maps:styles:download')]
-function download_protomaps_basemaps(): void
+function download_protomaps_basemaps(bool $force = false): void
 {
     io()->info('Downloading protomaps basemaps styles');
     create_directories();
 
     $targetFilename = sprintf('%s/data/resources/styles/protomaps.zip', variable('maps_data_folder'));
 
-    if (fs()->exists($targetFilename)) {
+    if (!$force && fs()->exists($targetFilename)) {
         io()->warning(sprintf('The file %s already exists, skipping download.', $targetFilename));
 
         return;
@@ -65,21 +65,27 @@ function download_protomaps_basemaps(): void
     unarchive($targetFilename, sprintf('%s/data/resources/styles', variable('maps_data_folder')));
 
     // build protomaps basemaps styles
-    docker_run('npm install && npm run generate-styles pmtiles:///pmtiles', workDir: '/home/app/maps/resources/styles/basemaps-main/styles');
+    docker_run('npm install && npm run generate-styles pmtiles:///pmtiles', workDir: '/home/app/maps/data/resources/styles/basemaps-main/styles');
     io()->success('Downloaded and built protomaps basemaps styles successfully!');
 }
 
 #[AsTask(description: 'Download versatiles styles', name: 'versatiles', namespace: 'maps:styles:download')]
-function download_versatiles(): void
+function download_versatiles(bool $force = false): void
 {
     io()->info('Downloading versatiles styles');
     create_directories();
     $gzFilename = sprintf('%s/data/resources/styles/versatiles-style-latest.tar.gz', variable('maps_data_folder'));
+
+    if (!$force && fs()->exists($gzFilename)) {
+        io()->warning(sprintf('The file %s already exists, skipping download.', $gzFilename));
+
+        return;
+    }
+
     download(
         'https://github.com/versatiles-org/versatiles-style/releases/latest/download/styles.tar.gz',
         $gzFilename,
     );
     unarchive($gzFilename, sprintf('%s/data/resources/styles/versatiles-style', variable('maps_data_folder')));
-
     io()->success('Downloaded versatiles styles successfully!');
 }
