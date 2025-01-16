@@ -668,8 +668,8 @@ function way_function()
 
 	-- Parks
 	-- **** name?
-	if     boundary=="national_park" then Layer("park",true); Attribute("kind",boundary); SetNameAttributes()
-	elseif leisure=="nature_reserve" then Layer("park",true); Attribute("kind",leisure ); SetNameAttributes() end
+	if     boundary=="national_park" then Layer("landuse",true); Attribute("kind","park"); Attribute("kind_detail",boundary); SetNameAttributes()
+	elseif leisure=="nature_reserve" then Layer("landuse",true); Attribute("kind","park"); Attribute("kind_detail",leisure ); SetNameAttributes() end
 
 	-- POIs ('pois' and 'pois_detail')
 	local rank, class, subclass = GetPOIRank()
