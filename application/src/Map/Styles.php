@@ -25,8 +25,12 @@ class Styles
     ) {
     }
 
-    public function getAvailableStyles(string $schema): array
+    public function getAvailableStyles(?string $schema = null): array
     {
+        if (null === $schema) {
+            return self::SCHEMA_STYLES;
+        }
+
         return self::SCHEMA_STYLES[$schema];
     }
 
