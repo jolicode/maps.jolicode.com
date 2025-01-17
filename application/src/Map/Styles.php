@@ -25,6 +25,11 @@ class Styles
     ) {
     }
 
+    public function getAvailableStyles(string $schema): array
+    {
+        return self::SCHEMA_STYLES[$schema];
+    }
+
     public function getDefaultStyle(string $schema): string
     {
         return self::SCHEMA_STYLES[$schema][0];

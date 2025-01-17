@@ -13,16 +13,27 @@
         <div
             id="sources"
             data-map-target="sources"
-            class="flex-none w-64 p-2 bg-white"
+            class="flex justify-between flex-col flex-none w-64 p-2 bg-white"
         >
-            {% for schema, schemaSources in sources %}
-                <h3 class="pt-4 font-semibold border-b border-indigo-100">{{ schema }}</h3>
-                {% for schemaSource in schemaSources %}
-                    <a class="block underline" href="{{ url('map', { schema: schema, location: schemaSource.filename[:-8], style: schema|defaultStyle }) }}">
-                        {{ schemaSource.filename[:-8] }}
+            <div>
+                <h2 class="pt-4 font-bold">Sources</h3>
+                {% for schema, schemaSources in sources %}
+                    <h3 class="pt-4 font-semibold border-b border-indigo-100">{{ schema }}</h3>
+                    {% for schemaSource in schemaSources %}
+                        <a class="block underline" href="{{ url('map', { schema: schema, location: schemaSource.filename[:-8], style: schema|defaultStyle }) }}">
+                            {{ schemaSource.filename[:-8] }}
+                        </a>
+                    {% endfor %}
+                {% endfor %}
+            </div>
+            <div>
+                <h2 class="pt-4 font-bold">Styles</h3>
+                {% for availableStyle in availableStyles %}
+                    <a class="block underline" href="{{ url('map', { schema: schema, location: location, style: availableStyle }) }}">
+                        {{ availableStyle }}
                     </a>
                 {% endfor %}
-            {% endfor %}
+            </div>
         </div>
         <div
             id="map"

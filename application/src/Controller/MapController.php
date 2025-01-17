@@ -37,6 +37,7 @@ class MapController extends AbstractController
             'schema' => $schema,
             'style' => $style,
             'sources' => $this->tilesRepository->list(),
+            'availableStyles' => $this->styles->getAvailableStyles($schema),
         ]);
     }
 
