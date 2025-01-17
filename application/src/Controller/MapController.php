@@ -5,8 +5,8 @@ namespace App\Controller;
 use App\Map\Styles;
 use App\Map\TilesRepository;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\DependencyInjection\Attribute\Autowire;
 use Symfony\Component\HttpFoundation\JsonResponse;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
@@ -14,8 +14,6 @@ use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 class MapController extends AbstractController
 {
     public function __construct(
-        #[Autowire(env: 'resolve:DATA_DIRECTORY')]
-        private readonly string $dataDirectory,
         private readonly TilesRepository $tilesRepository,
         private readonly Styles $styles,
         private readonly UrlGeneratorInterface $urlGenerator,
@@ -57,6 +55,18 @@ class MapController extends AbstractController
         $response->headers->set('Access-Control-Allow-Origin', '*');
 
         return $response;
+    }
+
+    #[Route('/style', name: 'style_save', methods: ['POST'])]
+    public function saveStyle(Request $request): Response
+    {
+        $styleContent = $request->getContent();
+
+        dump($styleContent);
+
+        return new JsonResponse([
+            'status' => 'success',
+        ]);
     }
 
     #[Route('/pmtiles/{schema}/{location}.pmtiles', name: 'map_pmtiles')]

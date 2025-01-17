@@ -7,43 +7,83 @@
 {% block body %}
     <div
         data-controller="map"
-        data-map-style-url-value="{{ url('map_style', { schema: schema, location: location, style: style }) }}"
-        class="flex h-full"
+        data-map-style-url-value="{{ schema ~ '/' ~ location ~ '/' ~ style }}"
+        class="font-mono text-sm"
     >
         <div
             id="sources"
             data-map-target="sources"
-            class="flex justify-between flex-col flex-none w-64 p-2 bg-white"
+            class="flex justify-between flex-col absolute top-2 left-2 bottom-2 w-48 bg-white bg-opacity-60 p-2 rounded-lg z-10"
         >
             <div>
-                <h2 class="pt-4 font-bold">Sources</h3>
+                <h2 class="pt-2 font-bold">Sources</h3>
                 {% for schema, schemaSources in sources %}
-                    <h3 class="pt-4 font-semibold border-b border-indigo-100">{{ schema }}</h3>
+                    <h3 class="pt-4 border-b border-gray-200">{{ schema }}</h3>
                     {% for schemaSource in schemaSources %}
-                        <a class="block underline" href="{{ url('map', { schema: schema, location: schemaSource.filename[:-8], style: schema|defaultStyle }) }}">
+                        <a
+                            class="block underline"
+                            href="{{ url('map', { schema: schema, location: schemaSource.filename[:-8], style: schema|defaultStyle }) }}"
+                            data-action="click->map#changeStyle:prevent"
+                            data-map-style-url-param="{{ schema ~ '/' ~ schemaSource.filename[:-8] ~ '/' ~ schema|defaultStyle }}"
+                        >
                             {{ schemaSource.filename[:-8] }}
                         </a>
                     {% endfor %}
                 {% endfor %}
             </div>
             <div>
-                <h2 class="pt-4 font-bold">Styles</h3>
-                {% for availableStyle in availableStyles %}
-                    <a class="block underline" href="{{ url('map', { schema: schema, location: location, style: availableStyle }) }}">
-                        {{ availableStyle }}
-                    </a>
-                {% endfor %}
+                <h2 class="pt-4 font-bold">Styles for this source</h3>
+                <div data-map-target="availableStyles">
+                    {% for availableStyle in availableStyles %}
+                        <a
+                            class="block underline"
+                            href="{{ url('map', { schema: schema, location: location, style: availableStyle }) }}"
+                            data-action="click->map#changeStyle:prevent"
+                            data-map-style-url-param="{{ schema ~ '/' ~ location ~ '/' ~ availableStyle }}"
+                        >
+                            {{ availableStyle }}
+                        </a>
+                    {% endfor %}
+                </div>
             </div>
         </div>
         <div
             id="map"
             data-map-target="map"
-            class="flex-1 grow"
+            class="!absolute top-0 left-0 right-0 bottom-0 z-0"
         ></div>
         <div
-            id="meta"
-            data-map-target="meta"
-            class="absolute top-0 right-0 bg-white bg-opacity-75 p-2 rounded-l-lg z-10"
-        ></div>
+            class="absolute flex flex-col gap-2 top-2 bottom-8 right-2 max-w-96 z-10"
+        >
+            <div
+                class="flex-shrink-0 bg-white bg-opacity-60 p-2 rounded-lg"
+            >
+                <p>Longitude: <span data-map-target="longitude"></span></p>
+                <p>Latitude: <span data-map-target="latitude"></span></p>
+                <p>Zoom: <span data-map-target="zoom"></span></p>
+            </div>
+
+            <div
+                class="flex-shrink-0 bg-white bg-opacity-60 p-2 rounded-lg"
+            >
+                <p class="text-nowrap text-ellipsis overflow-hidden">
+                    Style: <a data-map-target="styleUrl" class="underline"></a>
+                </p>
+                <div data-map-target="saveStyle">
+                    <p>The style has been modified. Click the button below to save the edited style.</p>
+                    <button
+                        data-action="click->map#saveStyle"
+                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
+                    >
+                        Save this style
+                    </button>
+                </div>
+            </div>
+
+            <div
+                data-map-target="styleEditor"
+                class="grow overflow-y-auto bg-white bg-opacity-60 p-2 rounded-lg"
+            ></div>
+        </div>
     </div>
 {% endblock %}
