@@ -26,10 +26,10 @@ return [
         'version' => '8.0.12',
     ],
     'maplibre-gl' => [
-        'version' => '5.0.1',
+        'version' => '5.1.0',
     ],
     'maplibre-gl/dist/maplibre-gl.min.css' => [
-        'version' => '5.0.1',
+        'version' => '5.1.0',
         'type' => 'css',
     ],
     'pmtiles' => [
