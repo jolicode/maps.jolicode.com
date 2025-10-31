@@ -1,0 +1,45 @@
+{
+    "devDependencies": {
+        "@babel/core": "^7.17.0",
+        "@babel/preset-env": "^7.16.0",
+        "@babel/preset-react": "^7.9.0",
+        "@babel/runtime": "^7.28.4",
+        "@hotwired/stimulus": "^3.0.0",
+        "@hotwired/turbo": "^7.1.0 || ^8.0",
+        "@symfony/stimulus-bridge": "^4.0.1",
+        "@symfony/ux-react": "file:vendor/symfony/ux-react/assets",
+        "@symfony/webpack-encore": "^5.1.0",
+        "@tailwindcss/postcss": "^4.1.16",
+        "@types/react": "^19",
+        "@types/react-dom": "^19",
+        "core-js": "^3.38.0",
+        "file-loader": "^6.0.0",
+        "postcss": "^8.5.6",
+        "postcss-loader": "^8.1.0",
+        "regenerator-runtime": "^0.13.9",
+        "tailwindcss": "^4.1.16",
+        "ts-loader": "^9.0.0",
+        "typescript": "^5.9.3",
+        "webpack": "^5.74.0",
+        "webpack-cli": "^5.1.0",
+        "webpack-dev-server": "^5.2.2"
+    },
+    "license": "UNLICENSED",
+    "private": true,
+    "scripts": {
+        "dev-server": "encore dev-server --host 127.0.0.1 --port 8000",
+        "dev": "encore dev",
+        "watch": "encore dev --watch",
+        "build": "encore production --progress"
+    },
+    "packageManager": "yarn@4.10.3",
+    "dependencies": {
+        "@uiw/react-color": "^2.9.2",
+        "@uiw/react-textarea-code-editor": "^3.1.1",
+        "@vis.gl/react-maplibre": "^8.1.0",
+        "maplibre-gl": "^5.10.0",
+        "pmtiles": "^4.3.0",
+        "react": "^19.2.0",
+        "react-dom": "^19.2.0"
+    }
+}

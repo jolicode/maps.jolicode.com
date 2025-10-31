@@ -92,7 +92,7 @@ function convert(
     create_directories();
 
     if (!fs()->exists($mbtilesFilename)) {
-        io()->error(sprintf('The mmtiles file does not exist. Run `castor maps:mbtiles:generate %s` first.', $name));
+        io()->error(sprintf('The mmtiles file does not exist. Run `castor maps:tiles:generate %s` first.', $name));
 
         return;
     }

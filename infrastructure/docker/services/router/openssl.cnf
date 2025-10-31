@@ -13,7 +13,7 @@ basicConstraints=CA:true
 subjectAltName = @alt_names
 
 [dn]
-CN=cartos.test
+CN=jolimap.test
 
 [alt_names]
-DNS.4 = www.cartos.test
+DNS.4 = www.jolimap.test

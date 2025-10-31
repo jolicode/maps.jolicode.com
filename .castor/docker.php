@@ -304,8 +304,8 @@ function workers_stop(): void
 function create_default_context(): Context
 {
     $data = create_default_variables() + [
-        'project_name' => 'app',
-        'root_domain' => 'app.test',
+        'project_name' => 'JoliMap',
+        'root_domain' => 'jolimap.test',
         'extra_domains' => [],
         'project_directory' => 'application',
         'php_version' => '8.2',

@@ -49,7 +49,7 @@ This IP is probably `127.0.0.1` unless you run Docker in a special VM (like dock
 > The router binds port 80 and 443, that's why it will work with `127.0.0.1`
 
 ```
-echo '127.0.0.1 app.test www.app.test' | sudo tee -a /etc/hosts
+echo '127.0.0.1 jolimap.test www.jolimap.test' | sudo tee -a /etc/hosts
 ```
 
 ### Starting the stack

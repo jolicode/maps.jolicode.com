@@ -22,8 +22,7 @@ function build(): void
 {
     io()->title('Building assets');
 
-    docker_compose_run('bin/console tailwind:build', workDir: '/var/www/application');
-    docker_compose_run('bin/console asset-map:compile', workDir: '/var/www/application');
+    docker_compose_run('yarn install', workDir: '/var/www/application');
 }
 
 #[AsTask(description: 'Builds and watches assets', aliases: ['watch'])]
@@ -31,5 +30,5 @@ function watch(): void
 {
     io()->title('Watching assets...');
 
-    docker_compose_run('bin/console tailwind:build --watch', context()->toInteractive(), workDir: '/var/www/application');
+    docker_compose_run('yarn watch', workDir: '/var/www/application');
 }

@@ -4,7 +4,7 @@
     "name:latin": "Streets",
     "sources": {
         "openmaptiles": {
-            "url": "https://martin.cartos.test/joined",
+            "url": "https://martin.jolimap.test/joined",
             "type": "vector"
         }
     },
@@ -8063,8 +8063,8 @@
     ],
     "metadata": {
     },
-    "glyphs": "https://martin.cartos.test/font/{fontstack}/{range}",
-    "sprite": "https://martin.cartos.test/sprite/sprite",
+    "glyphs": "https://martin.jolimap.test/font/{fontstack}/{range}",
+    "sprite": "https://martin.jolimap.test/sprite/sprite",
     "bearing": 0,
     "pitch": 0,
     "center": [
