@@ -86,3 +86,21 @@ export const exportJsonEvent = (mapStyle: maplibregl.StyleSpecification) => {
     });
   }
 };
+
+export const saveStyleEvent = (mapStyle: maplibregl.StyleSpecification) => {
+  const saveButton = document.querySelector('#save-button') as HTMLButtonElement;
+
+  if (saveButton) {
+    saveButton.addEventListener('click', () => {
+      localStorage.setItem('myStyle', mapStyle ? JSON.stringify(mapStyle) : '');
+    });
+  }
+};
+
+export const loadSavedStyle = (): maplibregl.StyleSpecification | null => {
+  const savedStyle = localStorage.getItem('myStyle');
+  if (savedStyle) {
+    return JSON.parse(savedStyle) as maplibregl.StyleSpecification;
+  }
+  return null;
+};

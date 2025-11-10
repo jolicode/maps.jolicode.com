@@ -8,7 +8,14 @@ import {
   StyleSpecification,
 } from 'maplibre-gl';
 import * as pmtiles from 'pmtiles';
-import { exportJsonEvent, getColorPropertyName, getLayerColor, updateMapStyle } from '../utils';
+import {
+  exportJsonEvent,
+  getColorPropertyName,
+  getLayerColor,
+  loadSavedStyle,
+  saveStyleEvent,
+  updateMapStyle,
+} from '../utils';
 import ColorPicker from '../components/ColorPicker';
 import RangeInput from '../components/RangeInput';
 import LayerTypeIcon from '../components/LayerTypeIcon';
@@ -68,13 +75,14 @@ const MapComponent = (props: { styleUrl: string; style: string }) => {
       .then(async (response) => {
         const style = await response.json();
         setMapStyle(style);
+
+        exportJsonEvent(style);
+        saveStyleEvent(style);
       })
       .catch((error) => {
         console.error('Error fetching map style:', error);
         return null;
       });
-
-    if (mapStyle) exportJsonEvent(mapStyle);
   }, []);
 
   if (!mapStyle) {
@@ -139,6 +147,21 @@ const MapComponent = (props: { styleUrl: string; style: string }) => {
             }}
           />
         </div>
+        {!!localStorage.getItem('myStyle') && (
+          <div className="flex-shrink-0 bg-white border border-gray-200 mx-2 p-2 rounded-lg">
+            <button
+              onClick={() => {
+                const savedStyle = loadSavedStyle();
+                if (savedStyle) {
+                  setMapStyle(savedStyle);
+                }
+              }}
+              className="rounded-lg underline cursor-pointer"
+            >
+              Load saved style
+            </button>
+          </div>
+        )}
 
         <div className="overflow-y-auto flex-shrink-1 h-full bg-white bg-opacity-60 p-2 rounded-lg">
           <h3 className="font-bold text-xl text-gray-700 mb-2">Global edits</h3>
