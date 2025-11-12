@@ -46,7 +46,6 @@ const MapComponent = (props: { styleUrl: string; style: string }) => {
   const [layerSearchTerm, setLayerSearchTerm] = React.useState<string>('');
   const [features, setFeatures] = React.useState<Array<MapGeoJSONFeature>>([]);
   const [mousePosition, setMousePosition] = React.useState<number[] | null>(null);
-  const [discoveryMode, setDiscoveryMode] = React.useState<boolean>(true);
 
   React.useEffect(() => {
     const hash = document.location.hash.substring(1);
@@ -102,34 +101,29 @@ const MapComponent = (props: { styleUrl: string; style: string }) => {
           glyphs: '/build/fonts/{fontstack}/{range}.pbf',
           sprite: 'https://jolimap.test/build/sprite/v4/' + props.style + '',
         }}
-        onMouseMove={(e) => {
-          if (discoveryMode) {
-            const { x, y } = e.point;
-            const r = 2;
-            let features = e.target.queryRenderedFeatures([
-              [x - r, y - r],
-              [x + r, y + r],
-            ]);
+        onClick={(e) => {
+          const { x, y } = e.point;
+          const r = 2;
+          let features = e.target.queryRenderedFeatures([
+            [x - r, y - r],
+            [x + r, y + r],
+          ]);
 
-            setFeatures(features);
-            setMousePosition([e.lngLat.lng, e.lngLat.lat]);
-          }
+          setFeatures(features);
+          setMousePosition([e.lngLat.lng, e.lngLat.lat]);
         }}
-        onClick={() => setDiscoveryMode(!discoveryMode)}
         cursor="crosshair"
       >
-        {!discoveryMode && (
-          <Source
-            id="point"
-            type="geojson"
-            data={{
-              type: 'Point' as const,
-              coordinates: mousePosition || [2.337, 48.87],
-            }}
-          >
-            <Layer {...layerStyle} />
-          </Source>
-        )}
+        <Source
+          id="point"
+          type="geojson"
+          data={{
+            type: 'Point' as const,
+            coordinates: mousePosition || [2.337, 48.87],
+          }}
+        >
+          <Layer {...layerStyle} />
+        </Source>
       </Map>
       <div className="flex flex-col gap-2 h-full min-w-84 max-w-96">
         <div className="flex-shrink-0 bg-white border border-gray-200 m-2 p-2 rounded-lg">
@@ -173,7 +167,9 @@ const MapComponent = (props: { styleUrl: string; style: string }) => {
               'background'
             )}
             onChange={(color) => {
-              setMapStyle(updateMapStyle(mapStyle, 'background', 'fill-color', 'paint', color));
+              setMapStyle(
+                updateMapStyle(mapStyle, 'background', 'background-color', 'paint', color)
+              );
             }}
           />
 
@@ -181,7 +177,9 @@ const MapComponent = (props: { styleUrl: string; style: string }) => {
           {mapStyle?.layers
             .filter(
               (layer) =>
-                layer.id !== 'background' && layer.id.toLowerCase().includes(layerSearchTerm)
+                layer.id !== 'background' &&
+                layer.id.toLowerCase().includes(layerSearchTerm) &&
+                (features.length === 0 || features.some((f) => f.layer.id === layer.id))
             )
             .map((layer) => {
               return (
@@ -338,7 +336,6 @@ const MapComponent = (props: { styleUrl: string; style: string }) => {
             {features.map((feature, index) => {
               const currentStyle = mapStyle.layers.find((layer) => layer.id === feature.layer.id);
               if (currentStyle) {
-                if (discoveryMode) {
                   return (
                     <div key={index} className="text-xs">
                       <p>{feature.sourceLayer}</p>
@@ -347,7 +344,6 @@ const MapComponent = (props: { styleUrl: string; style: string }) => {
                       <pre>{currentStyle.id}</pre>
                     </div>
                   );
-                }
 
                 return (
                   <div key={index} className="my-2">

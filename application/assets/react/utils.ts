@@ -92,6 +92,7 @@ export const saveStyleEvent = (mapStyle: maplibregl.StyleSpecification) => {
 
   if (saveButton) {
     saveButton.addEventListener('click', () => {
+      alert('Saving style to localStorage!');
       localStorage.setItem('myStyle', mapStyle ? JSON.stringify(mapStyle) : '');
     });
   }
