@@ -1,89 +1,93 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ location }} map{% endblock %}
+{% block title %} JoliMap -  {{ location }} map{% endblock %}
 
 {% block bodyClass %} class="h-screen"{% endblock %}
 
 {% block body %}
-    <div
-        data-controller="map"
-        data-map-style-url-value="{{ schema ~ '/' ~ location ~ '/' ~ style }}"
-        class="font-mono text-sm"
-    >
-        <div
-            id="sources"
-            data-map-target="sources"
-            class="flex justify-between flex-col absolute top-2 left-2 bottom-2 w-48 bg-white bg-opacity-60 p-2 rounded-lg z-10"
-        >
-            <div>
-                <h2 class="pt-2 font-bold">Sources</h3>
-                {% for schema, schemaSources in sources %}
-                    <h3 class="pt-4 border-b border-gray-200">{{ schema }}</h3>
-                    {% for schemaSource in schemaSources %}
-                        <a
-                            class="block underline"
-                            href="{{ url('map', { schema: schema, location: schemaSource.filename[:-8], style: schema|defaultStyle }) }}"
-                            data-action="click->map#changeStyle:prevent"
-                            data-map-style-url-param="{{ schema ~ '/' ~ schemaSource.filename[:-8] ~ '/' ~ schema|defaultStyle }}"
-                        >
-                            {{ schemaSource.filename[:-8] }}
-                        </a>
-                    {% endfor %}
-                {% endfor %}
+    <div>
+        <div class="flex justify-between p-4">
+            <div class="flex items-center gap-2">
+                <p>JoliMap /</p>
+                <input
+                    type="text"
+                    id="export-input"
+                    value="{{ 'style' ~ '-' ~ schema ~ '-' ~ style }}"
+                    class="border border-gray-300 rounded-lg p-2 w-96"/>
             </div>
-            <div>
-                <h2 class="pt-4 font-bold">Styles for this source</h3>
-                <div data-map-target="availableStyles">
-                    {% for availableStyle in availableStyles %}
-                        <a
-                            class="block underline"
-                            href="{{ url('map', { schema: schema, location: location, style: availableStyle }) }}"
-                            data-action="click->map#changeStyle:prevent"
-                            data-map-style-url-param="{{ schema ~ '/' ~ location ~ '/' ~ availableStyle }}"
-                        >
-                            {{ availableStyle }}
-                        </a>
-                    {% endfor %}
-                </div>
+            <div class="flex items-center gap-4">
+                <button id="save-button" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 cursor-pointer">
+                    Enregistrer
+                </button>
+                <button id="export-button" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 cursor-pointer">
+                    Exporter
+                </button>
+                <a href="{{ url('homepage') }}" class="underline">
+                    Fermer
+                </a>
             </div>
         </div>
-        <div
-            id="map"
-            data-map-target="map"
-            class="!absolute top-0 left-0 right-0 bottom-0 z-0"
-        ></div>
-        <div
-            class="absolute flex flex-col gap-2 top-2 bottom-8 right-2 max-w-96 z-10"
-        >
+        <div class="flex h-[calc(100vh-80px)]">
             <div
-                class="flex-shrink-0 bg-white bg-opacity-60 p-2 rounded-lg"
+                id="sources"
+                data-map-target="sources"
+                class="flex flex-col w-48 bg-white bg-opacity-60 p-2 rounded-lg z-10"
             >
-                <p>Longitude: <span data-map-target="longitude"></span></p>
-                <p>Latitude: <span data-map-target="latitude"></span></p>
-                <p>Zoom: <span data-map-target="zoom"></span></p>
-            </div>
-
-            <div
-                class="flex-shrink-0 bg-white bg-opacity-60 p-2 rounded-lg"
-            >
-                <p class="text-nowrap text-ellipsis overflow-hidden">
-                    Style: <a data-map-target="styleUrl" class="underline"></a>
-                </p>
-                <div data-map-target="saveStyle">
-                    <p>The style has been modified. Click the button below to save the edited style.</p>
-                    <button
-                        data-action="click->map#saveStyle"
-                        class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
-                    >
-                        Save this style
-                    </button>
+                <div>
+                    <h2 class="pt-2 text-xl text-gray-700 font-bold">Sources</h2>
+                    {% for schema, schemaSources in sources %}
+                        <h3 class="pt-2 border-b border-gray-200">{{ schema }}</h3>
+                        <ul>
+                            {% for schemaSource in schemaSources %}
+                                <li class="pl-2">
+                                    <a
+                                        class="underline flex items-center gap-2"
+                                        href="{{ url('map', { schema: schema, location: schemaSource.filename[:-8], style: schema|defaultStyle }) }}"
+                                        data-action="click->map#changeStyle:prevent"
+                                        data-map-style-url-param="{{ schema ~ '/' ~ schemaSource.filename[:-8] ~ '/' ~ schema|defaultStyle }}"
+                                    >
+                                        {{ schemaSource.filename[:-8] }}
+                                        {% if schemaSource.filename[:-8] == location %}
+                                            <span class="block rounded-full size-2 bg-green-500"></span>
+                                        {% endif %}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    {% endfor %}
+                </div>
+                <hr class="mt-4 border-gray-200"/>
+                <div>
+                    <h2 class="pt-4 text-xl text-gray-700 font-bold">Styles</h2>
+                    <span class="text-sm italic">(for the current source)</span>
+                    <div data-map-target="availableStyles">
+                        <ul>
+                            {% for availableStyle in availableStyles %}
+                                <li class="pl-2">
+                                    <a
+                                        class="underline flex items-center gap-2"
+                                        href="{{ url('map', { schema: schema, location: location, style: availableStyle }) }}"
+                                        data-action="click->map#changeStyle:prevent"
+                                        data-map-style-url-param="{{ schema ~ '/' ~ location ~ '/' ~ availableStyle }}"
+                                    >
+                                        {{ availableStyle }}
+                                        {% if style == availableStyle %}
+                                            <span class="block rounded-full size-2 bg-green-500"></span>
+                                        {% endif %}
+                                    </a>
+                                </li>
+                            {% endfor %}
+                        </ul>
+                    </div>
                 </div>
             </div>
-
-            <div
-                data-map-target="styleEditor"
-                class="grow overflow-y-auto bg-white bg-opacity-60 p-2 rounded-lg"
-            ></div>
+            <div {{ react_component('Map', {
+                    styleUrl: schema ~ '/' ~ location ~ '/' ~ style,
+                    style: style,
+                    fontUrl : asset('build/fonts/{fontstack}/{range}.pbf')
+                }) }} class="w-full flex items-center justify-center">
+                Loading... <i class="fas fa-cog fa-spin fa-3x"></i>
+            </div>
         </div>
     </div>
 {% endblock %}

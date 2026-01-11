@@ -1,0 +1,32 @@
+{
+    "compilerOptions": {
+        "strict": true,
+        // Language and Environment
+        "jsx": "react",
+        "target": "esnext",
+        // Modules
+        "module": "esnext",
+        "moduleResolution": "bundler",
+        "resolveJsonModule": true,
+        // Type Checking
+        "noImplicitAny": true,
+        // Emit
+        "removeComments": true,
+        "sourceMap": true,
+        // JavaScript Support
+        "allowJs": true,
+        "checkJs": false,
+        // Interop Constraints
+        "esModuleInterop": true,
+        "forceConsistentCasingInFileNames": true,
+        // Completeness
+        "skipLibCheck": true
+    },
+    "include": [
+        "./assets"
+    ],
+    "exclude": [
+        "./assets/vendor",
+        "./public/build"
+    ]
+}

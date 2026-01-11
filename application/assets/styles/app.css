@@ -1,3 +1,8 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
+@import url('https://fonts.googleapis.com/css2?family=Darker+Grotesque:wght@300..900&family=Source+Sans+3:ital,wght@0,200..900;1,200..900&display=swap');
+@import "tailwindcss";
+@source not "../../public";
+
+@theme {
+  --default-font-family: "Source Sans 3", ui-sans-serif, system-ui, sans-serif;
+  --font-secondary: "Darker Grotesque", ui-sans-serif, system-ui, sans-serif;
+}

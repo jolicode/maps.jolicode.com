@@ -25,7 +25,7 @@ import(__DIR__ . '/.castor');
  */
 function create_default_variables(): array
 {
-    $projectName = 'cartos';
+    $projectName = 'jolimap';
     $tld = 'test';
 
     return [
@@ -80,9 +80,9 @@ function install(): void
             docker_compose_run('npm install');
         }
     }
-    if (is_file("{$basePath}/importmap.php")) {
-        io()->section('Installing importmap');
-        docker_compose_run('bin/console importmap:install');
+    if (is_file("{$basePath}/package.json")) {
+        io()->section('Installing assets');
+        docker_compose_run('yarn install');
     }
 
     qa\install();

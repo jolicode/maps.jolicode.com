@@ -65,7 +65,7 @@ function download_protomaps_basemaps(bool $force = false): void
     unarchive($targetFilename, sprintf('%s/data/resources/styles', variable('maps_data_folder')));
 
     // build protomaps basemaps styles
-    docker_run('npm install && npm run generate-styles pmtiles:///pmtiles', workDir: '/home/app/maps/data/resources/styles/basemaps-main/styles');
+    docker_run('npm install && npm run generate-styles pmtiles:///pmtiles', workDir: '/var/www/maps/data/resources/styles/basemaps-main/styles');
     io()->success('Downloaded and built protomaps basemaps styles successfully!');
 }
 

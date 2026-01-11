@@ -101,7 +101,8 @@ RUN apt-get update \
         sudo \
         unzip \
     && apt-get clean \
-    && npm install -g yarn@1.22 \
+    && corepack enable \
+    && yarn set version stable \
     && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* /usr/share/doc/*
 
 # Config
